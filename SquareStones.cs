@@ -91,7 +91,7 @@ namespace PrimitiveTypes
             int squareLenght = 4;
             int squareWidth = 7;
             int stoneSize = 4;
-            int totalStonesInput = 3;
+            int totalStonesInput = 2;
             int totalStonesOutput = CalculateStones(squareLenght, squareWidth, stoneSize);
 
             Assert.AreEqual(totalStonesInput, totalStonesOutput);
@@ -104,7 +104,7 @@ namespace PrimitiveTypes
             int squareLenght = 6;
             int squareWidth = 2;
             int stoneSize = 4;
-            int totalStonesInput = 3;
+            int totalStonesInput = 2;
             int totalStonesOutput = CalculateStones(squareLenght, squareWidth, stoneSize);
 
             Assert.AreEqual(totalStonesInput, totalStonesOutput);
@@ -128,7 +128,7 @@ namespace PrimitiveTypes
                 {
                     squareRows++;
                 }
-                return (squareColumns == 1 || squareRows == 1) ? squareColumns + squareRows : squareColumns * squareRows;
+                return squareColumns * squareRows;
             }
 
 
