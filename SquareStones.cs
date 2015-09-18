@@ -36,7 +36,7 @@ namespace PrimitiveTypes
         //Square Width dividing without remainder
         public void Test3_WidthMultipleOfStoneSize()
         {
-            int squareLenght = 8;
+            int squareLenght = 6;
             int squareWidth = 8;
             int stoneSize = 4;
             int totalStonesInput = 4;
