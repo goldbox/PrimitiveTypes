@@ -17,12 +17,12 @@ namespace PrimitiveTypes
     [TestClass]
     public class TrainingRounds
     {
-        //100 Training Rounds
+        //10 Training Rounds
         [TestMethod]
         public void Test1()
         {
-            int trainingRoundN = 5;
-            int totalRounds = 25;
+            int trainingRoundN = 10;
+            int totalRounds = 100;
             int totalRoundsExpected = TotalRounds(trainingRoundN);
             Assert.AreEqual(totalRoundsExpected, totalRounds);
         }
