@@ -13,9 +13,7 @@ namespace PrimitiveTypes
     {
         public Watermelon()
         {
-            //
-            // TODO: Add constructor logic here
-            //
+            int i = 1;
         }
 
         private TestContext testContextInstance;
