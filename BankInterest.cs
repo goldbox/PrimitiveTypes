@@ -11,7 +11,7 @@ namespace PrimitiveTypes
     // contractul prevede restituirea în rate descrescătoare
 
     // calculează ce rată trebuie plătită în luna martie din al celui de al 4-lea an?
-    // generalizează pentru orice sumă, perioadă și dobândă<summary>
+    // generalizează pentru orice sumă, perioadă și dobândă
     
     [TestClass]
     public class BankInterest
