@@ -59,6 +59,7 @@
     <Compile Include="TrainingRounds.cs" />
     <Compile Include="BirdAndTrains.cs" />
     <Compile Include="Goats.cs" />
+    <Compile Include="Mushrooms.cs" />
     <Compile Include="Watermelon.cs" />
   </ItemGroup>
   <Choose>
