@@ -5,63 +5,58 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace PrimitiveTypes
 {
-    /// <summary>
-    /// Summary description for UnitTest1
-    /// </summary>
     [TestClass]
     public class Watermelon
     {
-        public Watermelon()
+        [TestMethod]
+        //Watermelon weight even: 4kg, 6 kg, ....
+        public void Test1()
         {
-            int i = 1;
+            int watermelonKg = 6;
+            string watermelonCanBeShared = "DA";
+            string watermelonCanBeSharedExpected = WatermelonSharing(watermelonKg);
+
+            Assert.AreEqual(watermelonCanBeSharedExpected, watermelonCanBeShared);
         }
-
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #region Additional test attributes
-        //
-        // You can use the following additional attributes as you write your tests:
-        //
-        // Use ClassInitialize to run code before running the first test in the class
-        // [ClassInitialize()]
-        // public static void MyClassInitialize(TestContext testContext) { }
-        //
-        // Use ClassCleanup to run code after all tests in a class have run
-        // [ClassCleanup()]
-        // public static void MyClassCleanup() { }
-        //
-        // Use TestInitialize to run code before running each test 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
-        //
-        // Use TestCleanup to run code after each test has run
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
-        //
-        #endregion
 
         [TestMethod]
-        public void TestMethod1()
+        //Watermelon weight odd: 5kg, 7 kg, ....
+        public void Test2()
         {
-            //
-            // TODO: Add test logic here
-            //
+            int watermelonKg = 5;
+            string watermelonCanBeShared = "NU";
+            string watermelonCanBeSharedExpected = WatermelonSharing(watermelonKg);
+
+            Assert.AreEqual(watermelonCanBeSharedExpected, watermelonCanBeShared);
+        }
+
+        [TestMethod]
+        //Watermelon weight under 4kg
+        public void Test3()
+        {
+            int watermelonKg = 2;
+            string watermelonCanBeShared = "NU";
+            string watermelonCanBeSharedExpected = WatermelonSharing(watermelonKg);
+
+            Assert.AreEqual(watermelonCanBeSharedExpected, watermelonCanBeShared);
+        }
+
+        private string WatermelonSharing (int watermelonKg)
+        {
+            if (watermelonKg >= 4)
+            {
+                if ((watermelonKg % 2) == 0)
+                {
+                    return "DA";
+                } else
+                {
+                    return "NU";
+                }
+
+            }   else
+            {
+                return "NU";
+            }
         }
     }
 }
