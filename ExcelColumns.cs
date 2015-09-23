@@ -5,65 +5,60 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace PrimitiveTypes
 {
-    /// <summary>
-    /// Summary description for UnitTest1
-    /// </summary>
     [TestClass]
     public class ExcelColumns
     {
-        public ExcelColumns()
+        [TestMethod]
+        public void Test1()
         {
-            //
-            // TODO: Add constructor logic here
-            //
+            int columnX = 13767;
+
+            string columnActual = "TIM";
+            string columnExpected = ChangeColumnXToLetters(columnX);
+            Assert.AreEqual(columnExpected, columnActual);
         }
-
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #region Additional test attributes
-        //
-        // You can use the following additional attributes as you write your tests:
-        //
-        // Use ClassInitialize to run code before running the first test in the class
-        // [ClassInitialize()]
-        // public static void MyClassInitialize(TestContext testContext) { }
-        //
-        // Use ClassCleanup to run code after all tests in a class have run
-        // [ClassCleanup()]
-        // public static void MyClassCleanup() { }
-        //
-        // Use TestInitialize to run code before running each test 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
-        //
-        // Use TestCleanup to run code after each test has run
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
-        //
-        #endregion
 
         [TestMethod]
-        public void TestMethod1()
+        //Column 0
+        public void Test2()
         {
-            //
-            // TODO: Add test logic here
-            //
+            int columnX = 0;
+
+            string columnActual = "No Excel Column";
+            string columnExpected = ChangeColumnXToLetters(columnX);
+            Assert.AreEqual(columnExpected, columnActual);
+        }
+
+        [TestMethod]
+        //Excel Column limit is 16384 or XFD
+        public void Test3()
+        {
+            int columnX = 16385;
+
+            string columnActual = "No Excel Column";
+            string columnExpected = ChangeColumnXToLetters(columnX);
+            Assert.AreEqual(columnExpected, columnActual);
+        }
+
+        private string ChangeColumnXToLetters (int columnX)
+        {
+            if (columnX <= 0 || columnX > 16384)
+            {
+                return "No Excel Column";
+            } else
+            {
+                string column = string.Empty;
+                int deimpartit = columnX;
+                do
+                 {
+                     int remainder = deimpartit % 26;
+                     remainder--;
+                     column = (char)('A' + remainder) + column;
+                     deimpartit = deimpartit / 26;
+                 } while (deimpartit != 0);
+           
+                return column;
+            }
         }
     }
 }
