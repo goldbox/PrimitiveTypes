@@ -54,15 +54,7 @@ namespace PrimitiveTypes
                 return 0;
             } else
             {
-                int trainingRoundX = 1;
-                int totalRounds = 0;
-                while (trainingRoundX < trainingRoundN)
-                {
-                    totalRounds = totalRounds + trainingRoundX;
-                    trainingRoundX++;
-                }
-                totalRounds = totalRounds * 2 + trainingRoundN;
-                return totalRounds;
+                return trainingRoundN * trainingRoundN;
             }
         }
     }
