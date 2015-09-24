@@ -40,6 +40,39 @@ namespace PrimitiveTypes
             Assert.AreEqual(columnExpected, columnActual);
         }
 
+        [TestMethod]
+        //Multiple of 26
+        public void Test4()
+        {
+            int columnX = 52;
+
+            string columnActual = "AZ";
+            string columnExpected = ChangeColumnXToLetters(columnX);
+            Assert.AreEqual(columnExpected, columnActual);
+        }
+
+        [TestMethod]
+        //ZZ
+        public void Test5()
+        {
+            int columnX = 702;
+
+            string columnActual = "ZZ";
+            string columnExpected = ChangeColumnXToLetters(columnX);
+            Assert.AreEqual(columnExpected, columnActual);
+        }
+
+        [TestMethod]
+        //AAA
+        public void Test6()
+        {
+            int columnX = 703;
+
+            string columnActual = "AAA";
+            string columnExpected = ChangeColumnXToLetters(columnX);
+            Assert.AreEqual(columnExpected, columnActual);
+        }
+
         private string ChangeColumnXToLetters (int columnX)
         {
             if (columnX <= 0 || columnX > 16384)
@@ -51,10 +84,19 @@ namespace PrimitiveTypes
                 int deimpartit = columnX;
                 do
                  {
-                     int remainder = deimpartit % 26;
-                     remainder--;
-                     column = (char)('A' + remainder) + column;
-                     deimpartit = deimpartit / 26;
+                    int remainder = deimpartit % 26;
+                    //fix if the column is multiple of 26, remainder 0
+                    if (remainder == 0)
+                    {
+                        column = (char)('A' + 25) + column;
+                        deimpartit = deimpartit / 26 - 1;
+                    } else
+                    {
+                        //Remainder between 1 - 25
+                        remainder--;
+                        column = (char)('A' + remainder) + column;
+                        deimpartit = deimpartit / 26;
+                    }
                  } while (deimpartit != 0);
            
                 return column;
