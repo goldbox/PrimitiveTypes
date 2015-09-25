@@ -61,6 +61,7 @@
     <Compile Include="Goats.cs" />
     <Compile Include="Mushrooms.cs" />
     <Compile Include="ArchaeologicalSite.cs" />
+    <Compile Include="FarmersLand.cs" />
     <Compile Include="WoodFlooring.cs" />
     <Compile Include="Watermelon.cs" />
   </ItemGroup>
