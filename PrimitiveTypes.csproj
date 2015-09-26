@@ -25,6 +25,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -62,6 +63,7 @@
     <Compile Include="Mushrooms.cs" />
     <Compile Include="ArchaeologicalSite.cs" />
     <Compile Include="FarmersLand.cs" />
+    <Compile Include="CryptDecryptText.cs" />
     <Compile Include="WoodFlooring.cs" />
     <Compile Include="Watermelon.cs" />
   </ItemGroup>
