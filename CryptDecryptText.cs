@@ -5,78 +5,51 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace PrimitiveTypes
 {
-    /// <summary>
-    /// Summary description for UnitTest1
-    /// </summary>
+    
     [TestClass]
     public class CryptDecryptText
     {
-        public CryptDecryptText()
-        {
-            //
-            // TODO: Add constructor logic here
-            //
-        }
-
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-
         [TestMethod]
         public void TestMethod1()
         {
             string initialText = "nicaieri nu e ca acasa";
-            int numberOfColumns = 4;
+            int numberOfColumns = 2;
 
-            string cryptedText = CryptInitialText(initialText, numberOfColumns);
-            Assert.AreEqual("abc", cryptedText);
-        }
-
-        public string CryptInitialText (string initialText, int numberOfColumns)
-        {
             string cryptedText = CryptText(initialText, numberOfColumns);
-            return cryptedText;
+            string decryptedText = DecryptText(cryptedText, numberOfColumns);
+            Assert.AreEqual(initialText, decryptedText);
         }
 
         private string CryptText(string initialText, int numberOfColumns)
         {
-            EliminateSpacesFromText(ref initialText);
+            string space = "replace spaces";
+            PlaceOrReplaceSpacesInText(ref initialText, space);
             AddRandomCharactersIfNeeded(ref initialText, numberOfColumns);
-            var cryptedText = CryptTextUsingNumberOfColumns(initialText, numberOfColumns);
+            var cryptedText = CryptDecryptTextUsingNumberOfColumns(initialText, numberOfColumns);
 
             return cryptedText;
         }
 
-        private void EliminateSpacesFromText(ref string initialText)
+        private string DecryptText(string cryptedText, int numberOfColumns)
         {
-            initialText = initialText.Replace(" ", "");
+            int textLenght = cryptedText.Length;
+            int numberOfRows = textLenght / numberOfColumns;
+            var decryptedText = CryptDecryptTextUsingNumberOfColumns(cryptedText, numberOfRows);
+            RemoveRandomCharacters(ref decryptedText);
+            string space = "place spaces";
+            PlaceOrReplaceSpacesInText(ref decryptedText, space);
+            return decryptedText;
         }
 
-        private string GiveRandomChars(int numberOfNeededRandomChars)
+        private void PlaceOrReplaceSpacesInText(ref string text, string space)
         {
-            char[] letters = "qwertyuiopasdfghjklzxcvbnm".ToCharArray();
-            Random r = new Random();
-            string randomString = string.Empty;
-            for (int i = 0; i < numberOfNeededRandomChars; i++)
+            if(space == "replace spaces")
             {
-                randomString += letters[r.Next(0, 25)].ToString();
+                text = text.Replace(" ", "qz");
+            } else if (space == "place spaces")
+            {
+                text = text.Replace("qz", " ");
             }
-            return randomString;
         }
 
         private void AddRandomCharactersIfNeeded (ref string initialText, int numberofColumns)
@@ -85,13 +58,42 @@ namespace PrimitiveTypes
             if (textLenght % numberofColumns != 0)
             {
                 int numberOfNeededRandomChars = ((textLenght / numberofColumns + 1) * numberofColumns) - textLenght;
-                initialText = initialText + GiveRandomChars(numberOfNeededRandomChars);
+                initialText = numberOfNeededRandomChars + initialText + GiveRandomChars(numberOfNeededRandomChars);
             }
         }
 
-        private string CryptTextUsingNumberOfColumns (string initialText, int numberOfColumns)
+        private void RemoveRandomCharacters(ref string decryptedText)
         {
-            string cryptedText = string.Empty;
+
+            int first = Convert.ToInt32(decryptedText[0]);
+            first -= 48;
+            if (first == 1)
+            {
+                decryptedText = decryptedText.Substring(1);
+            } else if (first <= 9)
+            {
+              int initialTextLenght = decryptedText.Length - first;                           
+              decryptedText = decryptedText.Substring(1, initialTextLenght);
+            }
+        }
+
+        private string GiveRandomChars(int numberOfNeededRandomChars)
+        {
+            char[] letters = "qwertyuiopasdfghjklzxcvbnm0123456789".ToCharArray();
+            Random r = new Random();
+            string randomString = string.Empty;
+            numberOfNeededRandomChars--;
+            for (int i = 0; i < numberOfNeededRandomChars; i++)
+            {
+                randomString += letters[r.Next(0, 35)].ToString();
+            }
+            return randomString;
+        }
+
+
+        private string CryptDecryptTextUsingNumberOfColumns (string initialText, int numberOfColumns)
+        {
+            string resultedText = string.Empty;
             int textLenght = initialText.Length;
             int numberOfRows = textLenght / numberOfColumns;
             for (int i = 0; i < numberOfRows; i++)
@@ -99,11 +101,11 @@ namespace PrimitiveTypes
                 for (int j = 0; j < numberOfColumns; j++)
                 {
                     int a = i + j * numberOfRows;
-                    cryptedText = cryptedText + initialText[a];
+                    resultedText = resultedText + initialText[a];
                 }
 
             }
-            return cryptedText;
+            return resultedText;
         }
     }
 }
