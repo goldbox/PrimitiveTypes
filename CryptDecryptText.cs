@@ -5,36 +5,86 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace PrimitiveTypes
 {
-    
+    //Crypt And Decrypt a text. Number Of columns accepted must be between 2 - 9. 
+    //Text lenght have to be at least double than number of columns
     [TestClass]
     public class CryptDecryptText
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestWithInitialData()
         {
             string initialText = "nicaieri nu e ca acasa";
-            int numberOfColumns = 2;
+            int numberOfColumns = 4;
 
-            string cryptedText = CryptText(initialText, numberOfColumns);
+            string cryptedText = CryptText(initialText, ref numberOfColumns);
             string decryptedText = DecryptText(cryptedText, numberOfColumns);
             Assert.AreEqual(initialText, decryptedText);
         }
 
-        private string CryptText(string initialText, int numberOfColumns)
+        [TestMethod]
+        public void TestWithOnlyOneColumn()
         {
+            string initialText = "nicaieri nu e ca acasa";
+            int numberOfColumns = 1;
+
+            string cryptedText = CryptText(initialText, ref numberOfColumns);
+            string decryptedText = DecryptText(cryptedText, numberOfColumns);
+            Assert.AreEqual("Error", decryptedText);
+        }
+
+        [TestMethod]
+        public void TestIfNumberOfColumnsAreMoreThanNine()
+        {
+            string initialText = "nicaieri nu e ca acasa";
+            int numberOfColumns = 10;
+
+            string cryptedText = CryptText(initialText, ref numberOfColumns);
+            string decryptedText = DecryptText(cryptedText, numberOfColumns);
+            Assert.AreEqual("Error", decryptedText);
+        }
+
+        [TestMethod]
+        public void TestIfLenghtOfInitialTextIsNotDoubleThanNumberOfColumns()
+        {
+            string initialText = "123456";
+            int numberOfColumns = 4;
+
+            string cryptedText = CryptText(initialText, ref numberOfColumns);
+            string decryptedText = DecryptText(cryptedText, numberOfColumns);
+            Assert.AreEqual("Error", decryptedText);
+        }
+
+
+        private string CryptText(string initialText, ref int numberOfColumns)
+        {
+            CheckInitialValues(ref initialText, ref numberOfColumns);
             string space = "replace spaces";
             PlaceOrReplaceSpacesInText(ref initialText, space);
             AddRandomCharactersIfNeeded(ref initialText, numberOfColumns);
-            var cryptedText = CryptDecryptTextUsingNumberOfColumns(initialText, numberOfColumns);
+            var cryptOrDecrypt = "Crypt Text";
+            var cryptedText = CryptDecryptTextUsingNumberOfColumns(initialText, numberOfColumns, cryptOrDecrypt);
 
             return cryptedText;
         }
 
+        private void CheckInitialValues(ref string initialText, ref int numberOfColumns)
+        {
+            if (numberOfColumns < 2 || 
+                numberOfColumns > 9 ||
+                initialText.Length / 2 < numberOfColumns)
+            {
+                initialText = "Error";
+                numberOfColumns = 2;
+            } 
+
+        }
+
         private string DecryptText(string cryptedText, int numberOfColumns)
         {
-            int textLenght = cryptedText.Length;
-            int numberOfRows = textLenght / numberOfColumns;
-            var decryptedText = CryptDecryptTextUsingNumberOfColumns(cryptedText, numberOfRows);
+            //int textLenght = cryptedText.Length;
+            //int numberOfRows = textLenght / numberOfColumns;
+            var cryptOrDecrypt = "Decrypt Text";
+            var decryptedText = CryptDecryptTextUsingNumberOfColumns(cryptedText, numberOfColumns, cryptOrDecrypt);
             RemoveRandomCharacters(ref decryptedText);
             string space = "place spaces";
             PlaceOrReplaceSpacesInText(ref decryptedText, space);
@@ -58,26 +108,27 @@ namespace PrimitiveTypes
             if (textLenght % numberofColumns != 0)
             {
                 int numberOfNeededRandomChars = ((textLenght / numberofColumns + 1) * numberofColumns) - textLenght;
-                initialText = numberOfNeededRandomChars + initialText + GiveRandomChars(numberOfNeededRandomChars);
+                initialText = numberOfNeededRandomChars + initialText + AddRandomCharsAtTheEnd(numberOfNeededRandomChars);
             }
         }
 
         private void RemoveRandomCharacters(ref string decryptedText)
         {
-
-            int first = Convert.ToInt32(decryptedText[0]);
-            first -= 48;
-            if (first == 1)
+            string s = decryptedText.Substring(0, 1);
+            int firstCharInDecryptedText;
+            Int32.TryParse(s, out firstCharInDecryptedText);
+            if (firstCharInDecryptedText == 1)
             {
                 decryptedText = decryptedText.Substring(1);
-            } else if (first <= 9)
+            } else if (firstCharInDecryptedText > 1 && 
+                        firstCharInDecryptedText <= 9)
             {
-              int initialTextLenght = decryptedText.Length - first;                           
+              int initialTextLenght = decryptedText.Length - firstCharInDecryptedText;                           
               decryptedText = decryptedText.Substring(1, initialTextLenght);
             }
         }
 
-        private string GiveRandomChars(int numberOfNeededRandomChars)
+        private string AddRandomCharsAtTheEnd(int numberOfNeededRandomChars)
         {
             char[] letters = "qwertyuiopasdfghjklzxcvbnm0123456789".ToCharArray();
             Random r = new Random();
@@ -90,12 +141,13 @@ namespace PrimitiveTypes
             return randomString;
         }
 
-
-        private string CryptDecryptTextUsingNumberOfColumns (string initialText, int numberOfColumns)
+        private string CryptDecryptTextUsingNumberOfColumns (string initialText, int numberOfColumns, string cryptOrDecrypt)
         {
             string resultedText = string.Empty;
             int textLenght = initialText.Length;
-            int numberOfRows = textLenght / numberOfColumns;
+            int numberOfRows = 0;
+            AssignRightValuesForCryptOrDecrypt(ref numberOfColumns, ref numberOfRows, cryptOrDecrypt, textLenght);
+
             for (int i = 0; i < numberOfRows; i++)
             {
                 for (int j = 0; j < numberOfColumns; j++)
@@ -106,6 +158,19 @@ namespace PrimitiveTypes
 
             }
             return resultedText;
+        }
+
+        private static void AssignRightValuesForCryptOrDecrypt(ref int numberOfColumns, ref int numberOfRows, string cryptOrDecrypt, int textLenght)
+        {
+            if (cryptOrDecrypt == "Crypt Text")
+            {
+                numberOfRows = textLenght / numberOfColumns;
+            }
+            else
+            {
+                numberOfRows = numberOfColumns;
+                numberOfColumns = textLenght / numberOfRows;
+            }
         }
     }
 }
