@@ -19,6 +19,50 @@ namespace PrimitiveTypes
             Assert.AreEqual(592900, initialFarmersland);
         }
 
+        [TestMethod]
+        public void TestWithInitialLandAreaLessThanOneSquareMeters()
+        {
+            int addedWidth = 230;
+            int finalFarmersLandArea = 230;
+
+            double initialFarmersland = CalculateInitialFarmersLand(addedWidth, finalFarmersLandArea);
+
+            Assert.AreEqual(1, initialFarmersland, 0.5);
+        }
+
+        [TestMethod]
+        public void TestIfAddedWidthIsZero()
+        {
+            int addedWidth = 0;
+            int finalFarmersLandArea = 230;
+
+            double initialFarmersland = CalculateInitialFarmersLand(addedWidth, finalFarmersLandArea);
+
+            Assert.AreEqual(230, initialFarmersland);
+        }
+
+        [TestMethod]
+        public void TestIfFinalLandAreaIsZero()
+        {
+            int addedWidth = 230;
+            int finalFarmersLandArea = 0;
+
+            double initialFarmersland = CalculateInitialFarmersLand(addedWidth, finalFarmersLandArea);
+
+            Assert.AreEqual(0, initialFarmersland);
+        }
+
+        [TestMethod]
+        public void TestWithInitialLandOneSquareMeters()
+        {
+            int addedWidth = 230;
+            int finalFarmersLandArea = 231;
+
+            double initialFarmersland = CalculateInitialFarmersLand(addedWidth, finalFarmersLandArea);
+
+            Assert.AreEqual(1, initialFarmersland);
+        }
+
         private double CalculateInitialFarmersLand(int addedWidth, int finalFarmersLandArea)
         {
             //Second degree ecuation > finalFarmerLandArea = x(x + 230)
@@ -26,7 +70,7 @@ namespace PrimitiveTypes
             double b = addedWidth;
             double c = -1 * finalFarmersLandArea;
             double squareLenght = SolveSecondDegreeEquation(a, b, c);
-            return Math.Round(CalculateSquareArea(squareLenght), 2);
+            return Math.Round(CalculateSquareArea(squareLenght), 4);
 
         }
 
