@@ -64,7 +64,7 @@
     <Compile Include="ArchaeologicalSite.cs" />
     <Compile Include="FarmersLand.cs" />
     <Compile Include="CryptDecryptText.cs" />
-    <Compile Include="NumberOfSquaresOnChessTable.cs" />
+    <Compile Include="ChessTable.cs" />
     <Compile Include="WoodFlooring.cs" />
     <Compile Include="Watermelon.cs" />
   </ItemGroup>

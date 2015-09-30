@@ -7,14 +7,14 @@ namespace PrimitiveTypes
 {
     
     [TestClass]
-    public class NumberOfSquaresOnChessTable
+    public class ChessTable
     {
         [TestMethod]
         public void TestForChessTable()
         {
             int lenghtOfSquare = 8;
 
-            Assert.AreEqual(204, CalculateNumberOfSquare(lenghtOfSquare));
+            Assert.AreEqual(204, CalculateNumberOfSquares(lenghtOfSquare));
         }
 
         [TestMethod]
@@ -22,7 +22,7 @@ namespace PrimitiveTypes
         {
             int lenghtOfSquare = 0;
 
-            Assert.AreEqual(0, CalculateNumberOfSquare(lenghtOfSquare));
+            Assert.AreEqual(0, CalculateNumberOfSquares(lenghtOfSquare));
         }
 
         [TestMethod]
@@ -30,7 +30,7 @@ namespace PrimitiveTypes
         {
             int lenghtOfSquare = 1;
 
-            Assert.AreEqual(1, CalculateNumberOfSquare(lenghtOfSquare));
+            Assert.AreEqual(1, CalculateNumberOfSquares(lenghtOfSquare));
         }
 
         [TestMethod]
@@ -38,11 +38,11 @@ namespace PrimitiveTypes
         {
             int lenghtOfSquare = 100;
 
-            Assert.AreEqual(338350, CalculateNumberOfSquare(lenghtOfSquare));
+            Assert.AreEqual(338350, CalculateNumberOfSquares(lenghtOfSquare));
         }
 
 
-        private int CalculateNumberOfSquare (int lenghtOfSquare)
+        private int CalculateNumberOfSquares (int lenghtOfSquare)
         {
             int result = 0;
             for (int i=1; i<=lenghtOfSquare; i++)
