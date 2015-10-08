@@ -66,6 +66,7 @@
     <Compile Include="CryptDecryptText.cs" />
     <Compile Include="ChessTable.cs" />
     <Compile Include="BinaryMathAddition.cs" />
+    <Compile Include="BitwiseOperators.cs" />
     <Compile Include="WoodFlooring.cs" />
     <Compile Include="Watermelon.cs" />
   </ItemGroup>
