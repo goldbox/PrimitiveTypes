@@ -7,158 +7,165 @@ namespace PrimitiveTypes
     public class BinaryMathAddition
     {
         [TestMethod]
-        public void TestWithIdenticalNumbers()
+        public void TestWithBase2()
         {
-            int firstNumber = 7;
-            int secondNumber = 7;
+            int firstNumber = 1468;
+            int secondNumber = 48;
             int baseX = 2;
-            string firstNumberBinar = ConvertFromDecimalToAnyBase(firstNumber, baseX);
-            string secondNumberBinar = ConvertFromDecimalToAnyBase(secondNumber, baseX);
-            string sumBinar = AddTwoBinars(firstNumberBinar, secondNumberBinar);
+            string firstNumberInBaseX = ConvertFromDecimalToAnyBase(firstNumber, baseX);
+            string secondNumberInBaseX = ConvertFromDecimalToAnyBase(secondNumber, baseX);
+            string sumOfTwoNumbersInBaseX = AddTwoNumbersFromAnyBase(firstNumberInBaseX, secondNumberInBaseX, baseX);
 
-            Assert.AreEqual(ConvertFromDecimalToAnyBase(14, baseX), sumBinar);
+            Assert.AreEqual(firstNumber + secondNumber, ConvertFromAnyBaseToDecimal(sumOfTwoNumbersInBaseX, baseX));
         }
 
         [TestMethod]
-        public void TestWithSmallNumbers()
+        public void TestWithBase5()
         {
-            int firstNumber = 2;
-            int secondNumber = 3;
-            int baseX = 2;
-            string firstNumberBinar = ConvertFromDecimalToAnyBase(firstNumber, baseX);
-            string secondNumberBinar = ConvertFromDecimalToAnyBase(secondNumber, baseX);
-            string sumBinar = AddTwoBinars(firstNumberBinar, secondNumberBinar);
+            int firstNumber = 37;
+            int secondNumber = 2794158;
+            int baseX = 5;
+            string firstNumberInBaseX = ConvertFromDecimalToAnyBase(firstNumber, baseX);
+            string secondNumberInBaseX = ConvertFromDecimalToAnyBase(secondNumber, baseX);
+            string sumOfTwoNumbersInBaseX = AddTwoNumbersFromAnyBase(firstNumberInBaseX, secondNumberInBaseX, baseX);
 
-            Assert.AreEqual("101", sumBinar);
+            Assert.AreEqual(firstNumber + secondNumber, ConvertFromAnyBaseToDecimal(sumOfTwoNumbersInBaseX, baseX));
         }
 
         [TestMethod]
-        public void TestWithFirstHigherThanSecondNumber()
+        public void TestWithIdenticalNumbersAndBase7()
         {
-            int firstNumber = 1024;
-            int secondNumber = 512;
-            int baseX = 2;
-            string firstNumberBinar = ConvertFromDecimalToAnyBase(firstNumber, baseX);
-            string secondNumberBinar = ConvertFromDecimalToAnyBase(secondNumber, baseX);
-            string sumBinar = AddTwoBinars(firstNumberBinar, secondNumberBinar);
+            int firstNumber = 20151008;
+            int secondNumber = 20151008;
+            int baseX = 7;
+            string firstNumberInBaseX = ConvertFromDecimalToAnyBase(firstNumber, baseX);
+            string secondNumberInBaseX = ConvertFromDecimalToAnyBase(secondNumber, baseX);
+            string sumOfTwoNumbersInBaseX = AddTwoNumbersFromAnyBase(firstNumberInBaseX, secondNumberInBaseX, baseX);
 
-            Assert.AreEqual(ConvertFromDecimalToAnyBase(1536, baseX), sumBinar);
+            Assert.AreEqual(firstNumber + secondNumber, ConvertFromAnyBaseToDecimal(sumOfTwoNumbersInBaseX, baseX));
         }
 
         [TestMethod]
-        public void TestWithSecondNumberHigherThanFirstNumber()
+        public void TestIfOneOfTheNumbersIsZero()
         {
-            int firstNumber = 75;
-            int secondNumber = 400;
-            int baseX = 2;
-            string firstNumberBinar = ConvertFromDecimalToAnyBase(firstNumber, baseX);
-            string secondNumberBinar = ConvertFromDecimalToAnyBase(secondNumber, baseX);
-            string sumBinar = AddTwoBinars(firstNumberBinar, secondNumberBinar);
+            int firstNumber = 0;
+            int secondNumber = 20151008;
+            int baseX = 3;
+            string firstNumberInBaseX = ConvertFromDecimalToAnyBase(firstNumber, baseX);
+            string secondNumberInBaseX = ConvertFromDecimalToAnyBase(secondNumber, baseX);
+            string sumOfTwoNumbersInBaseX = AddTwoNumbersFromAnyBase(firstNumberInBaseX, secondNumberInBaseX, baseX);
 
-            Assert.AreEqual(ConvertFromDecimalToAnyBase(475, baseX), sumBinar);
+            Assert.AreEqual(firstNumber + secondNumber, ConvertFromAnyBaseToDecimal(sumOfTwoNumbersInBaseX, baseX));
         }
 
-        public string ConvertFromDecimalToAnyBase(int numberBase10, int baseX)
+        public string ConvertFromDecimalToAnyBase(int decimalNumber, int baseX)
         {
             string numberBaseX = string.Empty;
-            while (numberBase10 != 0)
+            if (decimalNumber == 0)
             {
-                if (numberBase10 % baseX == 0)
+                return "0";
+            } else
+            {
+                while (decimalNumber != 0)
                 {
-                    numberBaseX = '0' + numberBaseX;
+                    if (decimalNumber % baseX == 0)
+                    {
+                        numberBaseX = '0' + numberBaseX;
+                    }
+                    else
+                    {
+                        int remainder = decimalNumber % baseX;
+                        numberBaseX = remainder + numberBaseX;
+                    }
+                    decimalNumber /= baseX;
                 }
-                else
-                {
-                    int remainder = numberBase10 % baseX;
-                    numberBaseX = remainder + numberBaseX;
-                }
-                numberBase10 /= baseX;
             }
             return numberBaseX;
-
         }
 
         public int ConvertFromAnyBaseToDecimal(string stringBaseX, int baseX)
         {
-            int x = stringBaseX.Length;
-            int result = 0;
-            for (int i = 1; i <= x; i++)
+            int stringBaseXLenght = stringBaseX.Length;
+            int decimalNumber = 0;
+            for (int i = 1; i <= stringBaseXLenght; i++)
             {
                 double baseXDouble = baseX;
                 double iDouble = i - 1;
                 double baseXAtPowerI = Math.Pow(baseXDouble, iDouble);
 
-                result += ReturnBitX(stringBaseX, i) * Convert.ToInt32(baseXAtPowerI);
+                decimalNumber += ReturnBitN(stringBaseX, i) * Convert.ToInt32(baseXAtPowerI);
             }
 
-            return result;
+            return decimalNumber;
         }
 
-        private string AddTwoBinars (string a, string b)
+        private string AddTwoNumbersFromAnyBase (string firstNumberInBaseX, string SecondNumberBaseX, int baseX)
         {
-            int x = CalculateHigherByteLenght(a, b);
+            int higherBitLenght = CalculateHigherBitLenght(firstNumberInBaseX, SecondNumberBaseX);
             
-            string tempBinaryString = string.Empty;
-            string finalBinaryString = string.Empty;
+            string tempString = string.Empty;
+            string finalString = string.Empty;
 
-            for (int i = 1; i <= x; i++)
+            for (int i = 1; i <= higherBitLenght; i++)
             {
-                int sumaX = AddOneBit(a, b, tempBinaryString, i);
-                if (sumaX < 2)
+                tempString = AddBitByBit(firstNumberInBaseX, SecondNumberBaseX, tempString, i, baseX);
+                int tempStringLenght = tempString.Length;
+                if (tempStringLenght == 1)
                 {
-                    tempBinaryString = sumaX + finalBinaryString;
-                    finalBinaryString = sumaX + finalBinaryString;
-                } else if (sumaX == 2)
-                {
-                    tempBinaryString = "10" + finalBinaryString;
-                    finalBinaryString = "0" + finalBinaryString;
-                } else if (sumaX == 3)
-                {
-                    tempBinaryString = "11" + finalBinaryString;
-                    finalBinaryString = "1" + finalBinaryString;
+                    finalString = tempString + finalString;
+                    tempString = "";
                 }
-
+                else if (tempStringLenght == 2)
+                {
+                    finalString = tempString.Substring(1, 1) + finalString;
+                    tempString = tempString.Substring(0, 1);
+                } 
+               
             }
-            if (tempBinaryString.Length > finalBinaryString.Length)
+            
+            if (tempString.Length == 1)
             {
-                finalBinaryString = tempBinaryString[0] + finalBinaryString;
+                finalString = tempString[0] + finalString;
+            
             }
-
-            return finalBinaryString;
-
-        }
-
-        private int AddOneBit(string a, string b, string tempBinaryString, int i)
-        {
-            int aX = ReturnBitX(a, i);
-            int bX = ReturnBitX(b, i);
-            int tempX = ReturnBitX(tempBinaryString, i);
-
-            int sumaX = aX + bX + tempX;
-            return sumaX;
+            return finalString;
 
         }
 
-        private int ReturnBitX(string a, int i)
+        private string AddBitByBit(string firstNumberInBaseX, string secondNumberinBaseX, string tempString, int x, int baseX)
         {
-            int aLenght = a.Length;
-            int x = aLenght - i;
-            if (x < 0)
+            int bitXNumber1 = ReturnBitN(firstNumberInBaseX, x);
+            int bitXNumber2 = ReturnBitN(secondNumberinBaseX, x);
+            int bitXFromTemp;
+            Int32.TryParse(tempString, out bitXFromTemp);
+
+            int sumX = bitXNumber1 + bitXNumber2 + bitXFromTemp;
+
+            return ConvertFromDecimalToAnyBase(sumX, baseX);
+
+        }
+
+        private int ReturnBitN(string numberInBaseX, int i)
+        {
+            int aLenght = numberInBaseX.Length;
+            int n = aLenght - i;
+            if (n < 0)
             {
                 return 0;
             }
             else
             {
-                int bitX = a[x];
-                bitX -= 48;
-                return bitX;
+                string tempString = numberInBaseX.Substring(n, 1);
+                int bitN;
+                Int32.TryParse(tempString, out bitN);
+
+                return bitN;
             }
         }
 
-        private int CalculateHigherByteLenght (string a, string b)
+        private int CalculateHigherBitLenght (string a, string b)
         {
             return a.Length >= b.Length ? a.Length : b.Length; 
-            
         }
 
     }

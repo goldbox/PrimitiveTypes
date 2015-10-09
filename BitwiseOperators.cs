@@ -49,6 +49,30 @@ namespace PrimitiveTypes
             Assert.AreEqual((firstNumber ^ secondNumber), ConvertFromAnyBaseToDecimal(aXorB, baseX));
         }
 
+        [TestMethod]
+        public void TestBitwiseOperatorLeftShift()
+        {
+            int firstNumber = 1579;
+            int baseX = 2;
+            string firstNumberInBaseX = ConvertFromDecimalToAnyBase(firstNumber, baseX);
+            
+            string aLHS = CalculateBitwiseLeftShift(firstNumberInBaseX);
+
+            Assert.AreEqual((firstNumber << 1), ConvertFromAnyBaseToDecimal(aLHS, baseX));
+        }
+
+        [TestMethod]
+        public void TestBitwiseOperatorRightShift()
+        {
+            int firstNumber = 129;
+            int baseX = 2;
+            string firstNumberInBaseX = ConvertFromDecimalToAnyBase(firstNumber, baseX);
+
+            string aRHS = CalculateBitwiseLeftShift(firstNumberInBaseX);
+
+            Assert.AreEqual((firstNumber << 1), ConvertFromAnyBaseToDecimal(aRHS, baseX));
+        }
+
         public string ConvertFromDecimalToAnyBase(int numberBase10, int baseX)
         {
             string numberBaseX = string.Empty;
@@ -119,6 +143,17 @@ namespace PrimitiveTypes
                 result = bitXAXorB + result;
             }
             return result;
+        }
+
+        private string CalculateBitwiseLeftShift (string a)
+        {
+            return a + "0";
+        }
+
+        private string CalculateBitwiseRightShift(string a)
+        {
+            int aLenght = a.Length;
+            return a.Substring(0, aLenght - 1);
         }
 
         private int ReturnBitX(string a, int i)
