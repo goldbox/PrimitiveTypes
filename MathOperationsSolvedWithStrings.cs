@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace PrimitiveTypes
 {
     [TestClass]
-    public class MathOperationsResolvedWithStrings
+    public class MathOperationsSolvedWithStrings
     {
         [TestMethod]
         public void TestWithBase2()
@@ -77,7 +77,8 @@ namespace PrimitiveTypes
             if (decimalNumber == 0)
             {
                 return "0";
-            } else
+            }
+            else
             {
                 while (decimalNumber != 0)
                 {
@@ -112,10 +113,10 @@ namespace PrimitiveTypes
             return decimalNumber;
         }
 
-        private string AddTwoNumbersFromAnyBase (string firstNumberInBaseX, string SecondNumberBaseX, int baseX)
+        private string AddTwoNumbersFromAnyBase(string firstNumberInBaseX, string SecondNumberBaseX, int baseX)
         {
             int higherBitLenght = CalculateHigherBitLenght(firstNumberInBaseX, SecondNumberBaseX);
-            
+
             string tempString = string.Empty;
             string finalString = string.Empty;
 
@@ -132,14 +133,14 @@ namespace PrimitiveTypes
                 {
                     finalString = tempString.Substring(1, 1) + finalString;
                     tempString = tempString.Substring(0, 1);
-                } 
-               
+                }
+
             }
-            
+
             if (tempString.Length == 1)
             {
                 finalString = tempString[0] + finalString;
-            
+
             }
             return finalString;
 
@@ -169,11 +170,11 @@ namespace PrimitiveTypes
             return finalString;
         }
 
-        private string MultiplyTwoNumbersInAnyBase (string firstNumberInBaseX, string secondNumberInBaseX, int baseX)
+        private string MultiplyTwoNumbersInAnyBase(string firstNumberInBaseX, string secondNumberInBaseX, int baseX)
         {
             int x = ConvertFromAnyBaseToDecimal(secondNumberInBaseX, baseX);
             string result = string.Empty;
-            for (int i = 0; i< x; i++)
+            for (int i = 0; i < x; i++)
             {
                 result = AddTwoNumbersFromAnyBase(result, firstNumberInBaseX, baseX);
             }
@@ -181,7 +182,7 @@ namespace PrimitiveTypes
         }
 
 
-        private bool CompareTwoNumbers (string firstNumber, string secondNumber)
+        private bool CompareTwoNumbers(string firstNumber, string secondNumber)
         {
             if (firstNumber.Length == secondNumber.Length)
             {
@@ -190,15 +191,16 @@ namespace PrimitiveTypes
             return (firstNumber.Length > secondNumber.Length) ? true : false;
         }
 
-        private bool IsFirstNumberHigher (string firstNumber, string secondNumber)
+        private bool IsFirstNumberHigher(string firstNumber, string secondNumber)
         {
             int x = firstNumber.Length;
-            for (int i = 0; i< x; i++)
+            for (int i = 0; i < x; i++)
             {
                 if (firstNumber[i] < secondNumber[i])
                 {
                     return false;
-                } else if (firstNumber[i] > secondNumber[i])
+                }
+                else if (firstNumber[i] > secondNumber[i])
                 {
                     return true;
                 }
@@ -233,8 +235,8 @@ namespace PrimitiveTypes
             }
             resultSubtraction = bitXNumber1 - tempBorrow - bitXNumber2;
             tempBorrow = 0;
-            return  resultSubtraction;
-            
+            return resultSubtraction;
+
         }
 
         private int ReturnBitN(string numberInBaseX, int i)
@@ -255,9 +257,9 @@ namespace PrimitiveTypes
             }
         }
 
-        private int CalculateHigherBitLenght (string a, string b)
+        private int CalculateHigherBitLenght(string a, string b)
         {
-            return a.Length >= b.Length ? a.Length : b.Length; 
+            return a.Length >= b.Length ? a.Length : b.Length;
         }
     }
 }

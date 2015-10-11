@@ -1,11 +1,10 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq;
 
 namespace PrimitiveTypes
 {
     [TestClass]
-    public class MathOperationsResolvedWithArrays
+    public class MathOperationsSolvedWithArray
     {
         [TestMethod]
         public void TestAddition()
