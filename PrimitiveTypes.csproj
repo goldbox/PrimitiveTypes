@@ -65,8 +65,9 @@
     <Compile Include="FarmersLand.cs" />
     <Compile Include="CryptDecryptText.cs" />
     <Compile Include="ChessTable.cs" />
-    <Compile Include="BinaryMathAddition.cs" />
+    <Compile Include="MathOperationsResolvedWithStrings.cs" />
     <Compile Include="BitwiseOperators.cs" />
+    <Compile Include="MathOperationsResolvedWithArrays.cs" />
     <Compile Include="WoodFlooring.cs" />
     <Compile Include="Watermelon.cs" />
   </ItemGroup>

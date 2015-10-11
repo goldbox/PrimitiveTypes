@@ -4,19 +4,20 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace PrimitiveTypes
 {
     [TestClass]
-    public class BinaryMathAddition
+    public class MathOperationsResolvedWithStrings
     {
         [TestMethod]
         public void TestWithBase2()
         {
             int firstNumber = 1468;
-            int secondNumber = 48;
-            int baseX = 2;
+            int secondNumber = 1234;
+            int baseX = 5;
             string firstNumberInBaseX = ConvertFromDecimalToAnyBase(firstNumber, baseX);
             string secondNumberInBaseX = ConvertFromDecimalToAnyBase(secondNumber, baseX);
             string sumOfTwoNumbersInBaseX = AddTwoNumbersFromAnyBase(firstNumberInBaseX, secondNumberInBaseX, baseX);
-
+            string substractionOfTwoNumbers = SubtractTwoNumbersInAnyBase(firstNumberInBaseX, secondNumberInBaseX, baseX);
             Assert.AreEqual(firstNumber + secondNumber, ConvertFromAnyBaseToDecimal(sumOfTwoNumbersInBaseX, baseX));
+            Assert.AreEqual(firstNumber - secondNumber, ConvertFromAnyBaseToDecimal(substractionOfTwoNumbers, baseX));
         }
 
         [TestMethod]
@@ -56,6 +57,18 @@ namespace PrimitiveTypes
             string sumOfTwoNumbersInBaseX = AddTwoNumbersFromAnyBase(firstNumberInBaseX, secondNumberInBaseX, baseX);
 
             Assert.AreEqual(firstNumber + secondNumber, ConvertFromAnyBaseToDecimal(sumOfTwoNumbersInBaseX, baseX));
+        }
+
+        [TestMethod]
+        public void TestMultiply()
+        {
+            int firstNumber = 1489;
+            int secondNumber = 1548;
+            int baseX = 5;
+            string firstNumberInBaseX = ConvertFromDecimalToAnyBase(firstNumber, baseX);
+            string secondNumberInBaseX = ConvertFromDecimalToAnyBase(secondNumber, baseX);
+            string multiplyOfTwoNumbers = MultiplyTwoNumbersInAnyBase(firstNumberInBaseX, secondNumberInBaseX, baseX);
+            Assert.AreEqual(firstNumber * secondNumber, ConvertFromAnyBaseToDecimal(multiplyOfTwoNumbers, baseX));
         }
 
         public string ConvertFromDecimalToAnyBase(int decimalNumber, int baseX)
@@ -132,6 +145,67 @@ namespace PrimitiveTypes
 
         }
 
+        private string SubtractTwoNumbersInAnyBase(string firstNumberInBaseX, string secondNumberInBaseX, int baseX)
+        {
+            if (firstNumberInBaseX == secondNumberInBaseX)
+            {
+                return "0";
+            }
+            bool firstNumberIsHigherThanSecond = CompareTwoNumbers(firstNumberInBaseX, secondNumberInBaseX);
+            if (!firstNumberIsHigherThanSecond)
+            {
+                return "Error";
+            }
+
+            int higherBitLenght = CalculateHigherBitLenght(firstNumberInBaseX, secondNumberInBaseX);
+
+            int tempBorrow = 0;
+            string finalString = string.Empty;
+
+            for (int i = 1; i <= higherBitLenght; i++)
+            {
+                finalString = SubtractBitByBit(firstNumberInBaseX, secondNumberInBaseX, ref tempBorrow, i, baseX) + finalString;
+            }
+            return finalString;
+        }
+
+        private string MultiplyTwoNumbersInAnyBase (string firstNumberInBaseX, string secondNumberInBaseX, int baseX)
+        {
+            int x = ConvertFromAnyBaseToDecimal(secondNumberInBaseX, baseX);
+            string result = string.Empty;
+            for (int i = 0; i< x; i++)
+            {
+                result = AddTwoNumbersFromAnyBase(result, firstNumberInBaseX, baseX);
+            }
+            return result;
+        }
+
+
+        private bool CompareTwoNumbers (string firstNumber, string secondNumber)
+        {
+            if (firstNumber.Length == secondNumber.Length)
+            {
+                return IsFirstNumberHigher(firstNumber, secondNumber) ? true : false;
+            }
+            return (firstNumber.Length > secondNumber.Length) ? true : false;
+        }
+
+        private bool IsFirstNumberHigher (string firstNumber, string secondNumber)
+        {
+            int x = firstNumber.Length;
+            for (int i = 0; i< x; i++)
+            {
+                if (firstNumber[i] < secondNumber[i])
+                {
+                    return false;
+                } else if (firstNumber[i] > secondNumber[i])
+                {
+                    return true;
+                }
+            }
+            return true;
+        }
+
         private string AddBitByBit(string firstNumberInBaseX, string secondNumberinBaseX, string tempString, int x, int baseX)
         {
             int bitXNumber1 = ReturnBitN(firstNumberInBaseX, x);
@@ -143,6 +217,24 @@ namespace PrimitiveTypes
 
             return ConvertFromDecimalToAnyBase(sumX, baseX);
 
+        }
+
+        private int SubtractBitByBit(string firstNumberInBaseX, string secondNumberinBaseX, ref int tempBorrow, int x, int baseX)
+        {
+            int bitXNumber1 = ReturnBitN(firstNumberInBaseX, x);
+            int bitXNumber2 = ReturnBitN(secondNumberinBaseX, x);
+            int resultSubtraction;
+            if (bitXNumber1 < (tempBorrow + bitXNumber2))
+            {
+                bitXNumber1 += baseX;
+                resultSubtraction = bitXNumber1 - tempBorrow - bitXNumber2;
+                tempBorrow = 1;
+                return resultSubtraction;
+            }
+            resultSubtraction = bitXNumber1 - tempBorrow - bitXNumber2;
+            tempBorrow = 0;
+            return  resultSubtraction;
+            
         }
 
         private int ReturnBitN(string numberInBaseX, int i)
