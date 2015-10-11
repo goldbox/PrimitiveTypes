@@ -259,6 +259,5 @@ namespace PrimitiveTypes
         {
             return a.Length >= b.Length ? a.Length : b.Length; 
         }
-
     }
 }
