@@ -68,6 +68,7 @@
     <Compile Include="MathOperationsResolvedWithStrings.cs" />
     <Compile Include="BitwiseOperators.cs" />
     <Compile Include="MathOperationsResolvedWithArrays.cs" />
+    <Compile Include="UnitTest2.cs" />
     <Compile Include="WoodFlooring.cs" />
     <Compile Include="Watermelon.cs" />
   </ItemGroup>

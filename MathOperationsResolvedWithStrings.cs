@@ -63,7 +63,7 @@ namespace PrimitiveTypes
         public void TestMultiply()
         {
             int firstNumber = 1489;
-            int secondNumber = 0;
+            int secondNumber = 1548;
             int baseX = 5;
             string firstNumberInBaseX = ConvertFromDecimalToAnyBase(firstNumber, baseX);
             string secondNumberInBaseX = ConvertFromDecimalToAnyBase(secondNumber, baseX);
