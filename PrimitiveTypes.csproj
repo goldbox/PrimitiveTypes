@@ -70,6 +70,7 @@
     <Compile Include="ChessTable.cs" />
     <Compile Include="BitwiseOperators.cs" />
     <Compile Include="Football.cs" />
+    <Compile Include="PascalTriangle.cs" />
     <Compile Include="WoodFlooring.cs" />
     <Compile Include="Watermelon.cs" />
   </ItemGroup>

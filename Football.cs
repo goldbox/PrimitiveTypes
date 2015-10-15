@@ -55,7 +55,7 @@ namespace PrimitiveTypes
             FootballGame[] lastGame = { new FootballGame("Concordia", "CSM Iasi", 4, 30) };
             FootballGame[] footballStageTest = AddLastGame(footballStage, lastGame);
             FootballGame[] weekestFootballGameRemoved = RemoveWeakestGame(footballStageTest);
-            Assert.AreEqual(footballStage, weekestFootballGameRemoved);
+            CollectionAssert.AreEqual(footballStage, weekestFootballGameRemoved);
             
         }
 
