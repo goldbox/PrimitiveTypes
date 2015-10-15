@@ -10,10 +10,10 @@ namespace PrimitiveTypes
         public void ReverseAStringAndReplaceOneChar()
         {
             string initialString = "Nicaieri nu e ca acasa";
-            char initialChar = 'r';
+            char forbiddenChar = 'r';
             char replacedChar = 'x';
 
-            string reversedString = ReverseInitialString(initialString, initialChar, replacedChar);
+            string reversedString = ReverseInitialString(initialString, forbiddenChar, replacedChar);
             Assert.AreEqual("asaca ac e un ixeiaciN", reversedString);
         }
 
@@ -21,26 +21,29 @@ namespace PrimitiveTypes
         public void TestEmptyString()
         {
             string initialString = "";
-            char initialChar = 't';
+            char forbiddenChar = 't';
             char replacedChar = 'x';
 
-            string reversedString = ReverseInitialString(initialString, initialChar, replacedChar);
+            string reversedString = ReverseInitialString(initialString, forbiddenChar, replacedChar);
             Assert.AreEqual("", reversedString);
         }
 
-        private string ReverseInitialString(string initialString, char initialChar, char replacedChar)
+        private string ReverseInitialString(string initialString, char forbiddenChar, char replacedChar)
         {
             if (initialString == "")
                 return "";
-            var x = initialString.Length - 1;
-            var substring = initialString.Substring(0, x);
-            char lastChar = GiveMeLastChar(initialString, initialChar, replacedChar, x);
-            return lastChar + ReverseInitialString(substring, initialChar, replacedChar);
+            var lastPosition = initialString.Length - 1;
+            var substring = initialString.Substring(0, lastPosition);
+            char lastChar = initialString[lastPosition];
+            ReplaceForbiddenChar(ref lastChar, forbiddenChar, replacedChar);
+
+            return lastChar + ReverseInitialString(substring, forbiddenChar, replacedChar);
         }
 
-        private static char GiveMeLastChar(string initialString, char initialChar, char replacedChar, int x)
+        private static void ReplaceForbiddenChar(ref char lastChar, char forbiddenChar, char replacedChar)
         {
-            return (initialString[x] == initialChar) ? replacedChar : initialString[x];
+            if (lastChar == forbiddenChar)
+                lastChar = replacedChar;
         }
     }
 }
