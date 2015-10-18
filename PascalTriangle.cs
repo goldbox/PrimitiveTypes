@@ -16,7 +16,7 @@ namespace PrimitiveTypes
 
             int[][] test = new int[0][];
 
-            CollectionAssert.Equals(tempPascal, finalPascalTriangle);
+            CollectionAssertJaggedArray(tempPascal, finalPascalTriangle);
         }
 
         [TestMethod]
@@ -28,8 +28,8 @@ namespace PrimitiveTypes
             int[][] finalPascalTriangle = GeneratePascalTriangle(numberOfRows, tempPascal);
 
             int[][] test = new int[1][] { new int[] { 1 } };
-            
-            CollectionAssert.Equals(tempPascal, finalPascalTriangle);
+
+            CollectionAssertJaggedArray(test, finalPascalTriangle);
         }
 
         [TestMethod]
@@ -49,18 +49,18 @@ namespace PrimitiveTypes
                 new int[] {1, 4, 6, 4, 1 },
                 new int[] {1, 5, 10, 10, 5, 1}
             };
-            CollectionAssert.Equals(tempPascal, finalPascalTriangle);
+            CollectionAssertJaggedArray(test, finalPascalTriangle);
         }
 
-        public int[][] GeneratePascalTriangle(int TotalRows, int[][] tempPascal)
+        public int[][] GeneratePascalTriangle(int totalRows, int[][] tempPascal)
         {
             int rowsTempPascal = tempPascal.Length;
-            if (TotalRows == 0 || TotalRows == rowsTempPascal)  
+            if (totalRows == 0 || totalRows == rowsTempPascal)  
                return tempPascal;
 
             tempPascal = AddNewRow(tempPascal, rowsTempPascal);
 
-            return  GeneratePascalTriangle(TotalRows, tempPascal);
+            return  GeneratePascalTriangle(totalRows, tempPascal);
             
         }
 
@@ -102,6 +102,15 @@ namespace PrimitiveTypes
             Array.Resize(ref tempPascal, addOne);
             Array.Resize(ref tempPascal[rowsTempPascal], addOne);
         }
-        
+
+        private void CollectionAssertJaggedArray(int[][] expected, int[][] finalTower)
+        {
+            int length = finalTower.Length;
+            for (int i = 0; i < length; i++)
+            {
+                CollectionAssert.AreEqual(expected[i], finalTower[i]);
+            }
+        }
+
     }
 }
