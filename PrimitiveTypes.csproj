@@ -57,6 +57,7 @@
     <Compile Include="MathOperationsSolvedWithArray.cs" />
     <Compile Include="MathOperationsSolvedWithStrings.cs" />
     <Compile Include="ReverseStringAndReplaceOneChar.cs" />
+    <Compile Include="SortingLotto.cs" />
     <Compile Include="SquareStones.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ExcelColumns.cs" />
