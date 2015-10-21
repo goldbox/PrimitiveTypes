@@ -7,21 +7,51 @@ namespace PrimitiveTypes
     public class SortingLotto
     {
         [TestMethod]
-        public void TestLottoRandom()
+        public void TestLottoRandomInsertion()
         {
             int[] lottoExtraction = new int[] { 9, 4, 15, 48, 35, 16 };
+            int[] test = new int[] { 4, 9, 15, 16, 35, 48 };
+            Array.Sort(test);
+
             int[] sortedLotto = SortUsingInsertion(lottoExtraction);
-            Array.Sort(lottoExtraction);
-            CollectionAssert.AreEqual(lottoExtraction, sortedLotto);
+            
+            CollectionAssert.AreEqual(test, sortedLotto);
         }
 
         [TestMethod]
-        public void TestLottoWorstCase()
+        public void TestLottoWorstCaseInsertion()
         {
             int[] lottoExtraction = new int[] { 48, 35, 16, 15, 9, 4 };
+            int[] test = new int[] { 48, 35, 16, 15, 9, 4 };
+            Array.Sort(test);
+            
             int[] sortedLotto = SortUsingInsertion(lottoExtraction);
-            Array.Sort(lottoExtraction);
-            CollectionAssert.AreEqual(lottoExtraction, sortedLotto);
+
+            CollectionAssert.AreEqual(test, sortedLotto);
+        }
+
+        [TestMethod]
+        public void TestLottoRandomMerge()
+        {
+            int[] lottoExtraction = new int[] { 9, 4, 15, 48, 35, 16 };
+            int[] test = new int[] { 4, 9, 15, 16, 35, 48 };
+            Array.Sort(test);
+
+            int[] sortedLotto = SortUsingMerge(lottoExtraction);
+
+            CollectionAssert.AreEqual(test, sortedLotto);
+        }
+
+        [TestMethod]
+        public void TestLottoWorstCaseMerge()
+        {
+            int[] lottoExtraction = new int[] { 48, 35, 16, 15, 9, 4 };
+            int[] test = new int[] { 48, 35, 16, 15, 9, 4 };
+            Array.Sort(test);
+
+            int[] sortedLotto = SortUsingMerge(lottoExtraction);
+
+            CollectionAssert.AreEqual(test, sortedLotto);
         }
 
         private int[] SortUsingInsertion(int[] lottoNumbers)
@@ -33,11 +63,71 @@ namespace PrimitiveTypes
 
         }
 
-        private void Swap (ref int[] lottoNumbers, int k)
+        private void Swap(ref int[] lottoNumbers, int k)
         {
             var temp = lottoNumbers[k];
             lottoNumbers[k] = lottoNumbers[k - 1];
             lottoNumbers[k - 1] = temp;
         }
+
+        private int[] SortUsingMerge(int[] lottoExtraction)
+        {
+            if (lottoExtraction.Length <= 1)
+                return lottoExtraction;
+
+            int half = lottoExtraction.Length / 2 - 1;
+
+            int[] firstHalf = GiveMeHalf(lottoExtraction, 0, half);
+            int[] secondHalf = GiveMeHalf(lottoExtraction, half + 1, lottoExtraction.Length - 1);
+
+            firstHalf = SortUsingMerge(firstHalf);
+            secondHalf = SortUsingMerge(secondHalf);
+
+            lottoExtraction = MergeArray(firstHalf, secondHalf);
+
+            return lottoExtraction;
+        }
+
+        private int[] GiveMeHalf(int[] initial, int iMin, int iMax)
+        {
+            Array.Copy(initial, iMin, initial, 0, iMax - iMin + 1);
+            Array.Resize(ref initial, iMax - iMin + 1);
+            return initial;
+        }
+
+        private int[] MergeArray(int[] firstHalf, int[] secondhalf)
+        {
+            int[] result = new int[firstHalf.Length + secondhalf.Length];
+            int x = 0, y = 0;
+            for(int i = 0; i< result.Length; i++)
+            {
+                if(x == firstHalf.Length)
+                {
+                    result[i] = secondhalf[y];
+                    y++;
+                    continue;
+                } else if (y == secondhalf.Length)
+                {
+                    result[i] = firstHalf[x];
+                    x++;
+                    continue;
+                }
+
+
+                if (firstHalf[x] <= secondhalf[y])
+                {
+                    result[i] = firstHalf[x];
+                    x++;
+                } else
+                {
+                    result[i] = secondhalf[y];
+                    y++;
+                }
+            }
+            return result;
+        }
+
+
+
     }
 }
