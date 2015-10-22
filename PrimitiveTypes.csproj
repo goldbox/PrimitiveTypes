@@ -59,6 +59,7 @@
     <Compile Include="ReverseStringAndReplaceOneChar.cs" />
     <Compile Include="SortingLotto.cs" />
     <Compile Include="SortingPriorityInService.cs" />
+    <Compile Include="SortPresidentialElection.cs" />
     <Compile Include="SquareStones.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ExcelColumns.cs" />
@@ -75,7 +76,7 @@
     <Compile Include="PascalTriangle.cs" />
     <Compile Include="HanoiTowers.cs" />
     <Compile Include="PocketCalculator.cs" />
-    <Compile Include="SortingAndCountWordsInitialCode.cs" />
+    <Compile Include="SortAndCountWordsInitialCode.cs" />
     <Compile Include="SortAndCountWordsAlphabetic.cs" />
     <Compile Include="WoodFlooring.cs" />
     <Compile Include="Watermelon.cs" />

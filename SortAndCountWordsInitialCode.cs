@@ -15,7 +15,7 @@ namespace PrimitiveTypes
         }
     }
     [TestClass]
-    public class SortingAndCountWordsInitialCode
+    public class SortAndCountWordsInitialCode
     {
         [TestMethod]
         public void SimpleTest()
