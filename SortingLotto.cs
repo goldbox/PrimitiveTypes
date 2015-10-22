@@ -98,36 +98,33 @@ namespace PrimitiveTypes
         private int[] MergeArray(int[] firstHalf, int[] secondhalf)
         {
             int[] result = new int[firstHalf.Length + secondhalf.Length];
-            int x = 0, y = 0;
-            for(int i = 0; i< result.Length; i++)
+            int x = 0, y = 0, z = 0;
+            while (x < firstHalf.Length || y < secondhalf.Length)
             {
-                if(x == firstHalf.Length)
+                if (IsLessThen(firstHalf, x, secondhalf, y))
                 {
-                    result[i] = secondhalf[y];
-                    y++;
-                    continue;
-                } else if (y == secondhalf.Length)
-                {
-                    result[i] = firstHalf[x];
-                    x++;
-                    continue;
+                    result[z++] = firstHalf[x++];
                 }
-
-
-                if (firstHalf[x] <= secondhalf[y])
+                else
                 {
-                    result[i] = firstHalf[x];
-                    x++;
-                } else
-                {
-                    result[i] = secondhalf[y];
-                    y++;
+                    result[z++] = secondhalf[y++];
                 }
             }
             return result;
         }
 
+        private static bool IsLessThen(int[] firstHalf, int x, int[] secondHalf, int y)
+        {
+            var isFirstHalfDone = IsDone(firstHalf, x);
+            var isSecondHalfDone = IsDone(secondHalf, y);
+            if (isFirstHalfDone) return false;
+            if (isSecondHalfDone) return true;
+            return firstHalf[x] <= secondHalf[y];
+        }
 
-
+        private static bool IsDone(int[] firstHalf, int index)
+        {
+            return index >= firstHalf.Length;
+        }
     }
 }

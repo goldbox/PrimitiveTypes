@@ -75,6 +75,8 @@
     <Compile Include="PascalTriangle.cs" />
     <Compile Include="HanoiTowers.cs" />
     <Compile Include="PocketCalculator.cs" />
+    <Compile Include="SortingAndCountWordsInitialCode.cs" />
+    <Compile Include="SortAndCountWordsAlphabetic.cs" />
     <Compile Include="WoodFlooring.cs" />
     <Compile Include="Watermelon.cs" />
   </ItemGroup>

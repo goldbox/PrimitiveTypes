@@ -3,33 +3,20 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace PrimitiveTypes
 {
+    public enum priority { low, med, high }
+    
     public struct ServiceContracts
     {
         public uint fileNumber;
-        public string priority;
-        public int priorityNumber;
-
-        public ServiceContracts (uint fileNumber, string priority)
+        public priority priority;
+        
+       public ServiceContracts (uint fileNumber, priority priority)
         {
             this.fileNumber = fileNumber;
             this.priority = priority;
-            switch (priority)
-            {
-                case "high":
-                    this.priorityNumber = 3;
-                    break;
-                case "med":
-                    this.priorityNumber = 2;
-                    break;
-                case "low":
-                    this.priorityNumber = 1;
-                    break;
-                default:
-                    this.priorityNumber = 0;
-                    break; 
-            }
         }
     }
+
     [TestClass]
     public class SortingPriorityInService
     {
@@ -37,20 +24,20 @@ namespace PrimitiveTypes
         public void TestMethod1()
         {
             ServiceContracts[] serviceFile = {
-                                                new ServiceContracts(157, "low"),
-                                                new ServiceContracts(648, "med"),
-                                                new ServiceContracts(1420, "high"),
-                                                new ServiceContracts(496, "med"),
-                                                new ServiceContracts(618, "low"),
-                                                new ServiceContracts(987, "high")
+                                                new ServiceContracts(157, priority.low),
+                                                new ServiceContracts(648, priority.med),
+                                                new ServiceContracts(1420, priority.high),
+                                                new ServiceContracts(496, priority.med),
+                                                new ServiceContracts(618, priority.low),
+                                                new ServiceContracts(987, priority.high)
                                                 };
             ServiceContracts[] test = {
-                                                new ServiceContracts(1420, "high"),
-                                                new ServiceContracts(987, "high"),
-                                                new ServiceContracts(648, "med"),
-                                                new ServiceContracts(496, "med"),
-                                                new ServiceContracts(157, "low"),
-                                                new ServiceContracts(618, "low"),
+                                                new ServiceContracts(1420, priority.high),
+                                                new ServiceContracts(987, priority.high),
+                                                new ServiceContracts(648, priority.med),
+                                                new ServiceContracts(496, priority.med),
+                                                new ServiceContracts(157, priority.low),
+                                                new ServiceContracts(618, priority.low)
                                                 };
             ServiceContracts[] sortedByHighestPriority = SortByPriority(serviceFile);
 
@@ -60,7 +47,7 @@ namespace PrimitiveTypes
         private ServiceContracts[] SortByPriority(ServiceContracts[] serviceFile)
         {
             for (int i = 1; i < serviceFile.Length; i++)
-                for (int j = i; j > 0 && (serviceFile[j].priorityNumber > serviceFile[j - 1].priorityNumber); j--)
+                for (int j = i; j > 0 && ((int)serviceFile[j].priority > (int)serviceFile[j - 1].priority); j--)
                     Swap(ref serviceFile, j);
             return serviceFile;
         }
