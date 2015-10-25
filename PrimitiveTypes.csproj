@@ -60,6 +60,7 @@
     <Compile Include="SortingLotto.cs" />
     <Compile Include="SortingPriorityInService.cs" />
     <Compile Include="SortPresidentialElection.cs" />
+    <Compile Include="SortStudents.cs" />
     <Compile Include="SquareStones.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ExcelColumns.cs" />

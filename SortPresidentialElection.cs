@@ -44,13 +44,13 @@ namespace PrimitiveTypes
                                                 new PollingStation("Mircea Eliade", 1288),
                                                 };
             PollingStation[] finalResult = new PollingStation[0];
-            finalResult = AddThisPollingStation(clujGheorgheni, finalResult);
-            finalResult = AddThisPollingStation(clujManastur, finalResult);
-            finalResult = AddThisPollingStation(clujMarasti, finalResult);
+            AddThisPollingStation(clujGheorgheni, ref finalResult);
+            AddThisPollingStation(clujManastur, ref finalResult);
+            AddThisPollingStation(clujMarasti, ref finalResult);
             CollectionAssert.AreEqual(test, finalResult);
         }
 
-        public PollingStation[] AddThisPollingStation(PollingStation[] newArrivedPolling, PollingStation[] finalResult)
+        public PollingStation[] AddThisPollingStation(PollingStation[] newArrivedPolling, ref PollingStation[] finalResult)
         {
             finalResult = AddNewVotesToFinal(newArrivedPolling, finalResult);
             finalResult = SortUsingNumberOfVotes(finalResult);
@@ -86,15 +86,15 @@ namespace PrimitiveTypes
         {
             for (int i = 1; i < finalResult.Length; i++)
                 for (int j = i; j > 0 && (finalResult[j].numberOfVotes > finalResult[j - 1].numberOfVotes); j--)
-                    Swap(ref finalResult, j);
+                    Swap(ref finalResult, j, j-1);
             return finalResult;
         }
 
-        private void Swap(ref PollingStation[] finalResult, int j)
+        private void Swap(ref PollingStation[] finalResult, int a, int b)
         {
-            var temp = finalResult[j];
-            finalResult[j] = finalResult[j - 1];
-            finalResult[j - 1] = temp;
+            var temp = finalResult[a];
+            finalResult[a] = finalResult[b];
+            finalResult[b] = temp;
         }
 
 
