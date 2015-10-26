@@ -58,18 +58,12 @@ namespace PrimitiveTypes
                 new Classsroom("Mirela Mihaescu", GiveRandomGradesToAllDisciplines(20)),
                 new Classsroom("Dumitru Cristea", GiveRandomGradesToAllDisciplines(21)),
                 new Classsroom("Monica Suteu", GiveRandomGradesToAllDisciplines(22)),
-
             };
 
-            ComputeAverageGradeAndSortStudents(ref elevenA);
-
-
-
-
-
+            CalculateAverageGradesAndSortStudents(ref elevenA);
         }
 
-        private void ComputeAverageGradeAndSortStudents(ref Classsroom[] elevenA)
+        private void CalculateAverageGradesAndSortStudents(ref Classsroom[] elevenA)
         {
             int i = 0;
             foreach(Classsroom student in elevenA)
@@ -77,17 +71,35 @@ namespace PrimitiveTypes
                 elevenA[i].averageGrade = CalculateAverageGrades(student);
                 i++;
             }
-            SortUsingAverageGrade(ref elevenA);
+            SortUsingAverageGradeQuick(ref elevenA, 0, elevenA.Length - 1);
         }
 
-        private void SortUsingAverageGrade(ref Classsroom[] classroom)
+        public void SortUsingAverageGradeQuick(ref Classsroom[] classroom, int left, int right)
         {
-            for (int i = 1; i < classroom.Length; i++)
-                for (int j = i; j > 0 && (classroom[j].averageGrade > classroom[j - 1].averageGrade); j--)
-                    Swap(ref classroom, j, j - 1);
+            int i = left, j = right;
+            Classsroom pivot = classroom[(left + right) / 2];
+            while (i <= j)
+            {
+                while (classroom[i].averageGrade > pivot.averageGrade)
+                    i++;
+                while (classroom[j].averageGrade < pivot.averageGrade)
+                    j--;
+
+                if (i <= j)
+                {
+                    Swap(ref classroom, i, j);
+                    i++;
+                    j--;
+                }
+            }
+
+            if (left < j)
+                SortUsingAverageGradeQuick(ref classroom, left, j);
+            if (i < right)
+                SortUsingAverageGradeQuick(ref classroom, i, right);
         }
 
-        private void Swap(ref Classsroom[] classroom, int a, int b)
+        public void Swap(ref Classsroom[] classroom, int a, int b)
         {
             var temp = classroom[a];
             classroom[a] = classroom[b];
